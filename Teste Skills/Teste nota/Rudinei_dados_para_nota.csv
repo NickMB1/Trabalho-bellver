@@ -1,0 +1,41 @@
+Item;Descrição da Peça/Serviço;Quantidade;Valor Unitário (R$);Valor Total (R$);NCM;CFOP de Venda;Observação
+1;Jogo de pistões 0,50;4;144,00;576,00;8409.91.20;5.102;Êmbolos (pistões) - partes de motor NCM 8409
+2;Jogo de anéis 0,50;1;196,00;196,00;8409.91.10;5.102;Anéis de segmento - partes de motor NCM 8409
+3;Bronzina de biela 0,25;1;98,00;98,00;8483.30.29;5.102;Mancal/bronzina sem elementos rolantes
+4;Bronzina de mancal 0,25;1;143,00;143,00;8483.30.29;5.102;Mancal/bronzina sem elementos rolantes
+5;Bomba de óleo;1;469,00;469,00;8413.30.30;5.102;Bomba para óleo lubrificante de motor
+6;Jogo de junta do motor;1;280,00;280,00;8484.10.00;5.102;Jogo/sortido de juntas de composições diferentes
+7;Retífica geral do cabeçote;1;800,00;800,00;N/A - Serviço;N/A;Serviço de usinagem, não é mercadoria - emitir em NFS-e (ISSQN), não em NF-e de produto
+8;Retífica geral do bloco;1;2000,00;2000,00;N/A - Serviço;N/A;Serviço de usinagem, não é mercadoria - emitir em NFS-e (ISSQN), não em NF-e de produto
+9;Kit correia dentada;1;222,00;222,00;4010.39.00;5.102;Correia dentada (síncrona) - conferir se o kit inclui tensor (NCM 8483.50.90) para nota separada por item, se exigido
+10;Bomba de água;1;139,00;139,00;8413.30.90;5.102;Bomba para líquido de arrefecimento de motor
+11;Válvula termostática;1;159,00;159,00;8481.80.21;5.102;Válvula de expansão termostática
+12;Óleo + filtro;1;220,00;220,00;VER OBS;5.102;Item composto: sugerimos desmembrar em 2 linhas na NF - Óleo lubrificante NCM 2710.19.32 e Filtro de óleo NCM 8421.23.00
+13;Aditivo;6;19,90;119,40;3820.00.00;5.102;Preparação anticongelante/aditivo de arrefecimento (se for aditivo de óleo, usar NCM 3811.21.00 - conferir produto usado)
+14;Selo do motor grande;2;34,00;68,00;4016.93.00;5.102;Retentor/selo de borracha vulcanizada
+15;Selo do motor pequeno;7;15,00;105,00;4016.93.00;5.102;Retentor/selo de borracha vulcanizada
+16;Cabos de velas;1;170,00;170,00;8544.30.00;5.102;Jogo de cabos/fios de ignição
+17;Jogo de velas;1;120,00;120,00;8511.10.00;5.102;Velas de ignição
+18;Correia de alternador;1;60,00;60,00;4010.31.00;5.102;Correia de transmissão de borracha - conferir se é estriada (4010.31.00) ou trapezoidal lisa (4010.32.00)
+19;Correia da direção hidráulica;1;40,00;40,00;4010.31.00;5.102;Correia de transmissão de borracha - conferir se é estriada (4010.31.00) ou trapezoidal lisa (4010.32.00)
+20;Retentor do volante (flange);1;190,00;190,00;4016.93.00;5.102;Retentor de borracha vulcanizada
+21;Filtro de ar do motor;1;65,00;65,00;8421.31.00;5.102;Filtro de ar para motor de combustão
+22;Guia de válvulas;8;25,00;200,00;8409.91.17;5.102;Guias de válvulas - partes de motor NCM 8409
+23;Material de limpeza;1;85,00;85,00;3402.90.90;5.102;Preparação de limpeza/desengraxante - NCM pode variar conforme composição exata do produto usado
+24;Homocinéticas;2;238,00;476,00;8708.99.90;5.102;Junta homocinética - partes e acessórios de veículos automóveis (n/e em posição específica)
+25;Motor de partida;1;650,00;650,00;8511.40.00;5.102;Motor de arranque
+26;4 Jet cooler;4;34,00;136,00;8409.99.90;5.102;Bico injetor de óleo p/ resfriamento do pistão - "outras partes" de motor (NCM não tem código específico; conferir NESH)
+27;Interruptor de óleo;1;65,00;65,00;9026.20.90;5.102;Instrumento/interruptor de pressão de óleo
+28;Tubo de água;1;45,00;45,00;4009.12.90;5.102;Assumido como mangueira de borracha - se for tubo rígido metálico/plástico, reclassificar (ex.: NCM 7307/3917)
+29;Kit embreagem;1;389,00;389,00;8708.93.00;5.102;Embreagens e suas partes (platô, disco, rolamento)
+30;Retífica do volante;1;100,00;100,00;N/A - Serviço;N/A;Serviço de usinagem, não é mercadoria - emitir em NFS-e (ISSQN), não em NF-e de produto
+31;Jogo de parafusos de cabeçote;1;153,00;153,00;7318.15.00;5.102;Parafusos de aço - outros parafusos e pinos ou pernos
+32;Mangueira inferior do radiador;1;249,00;249,00;4009.12.90;5.102;Mangueira de borracha reforçada com têxtil para radiador
+33;Sensor de temperatura;1;134,00;134,00;9025.19.90;5.102;Sensor/termistor de temperatura sem mostrador
+34;Tampa do reservatório;1;44,30;44,30;8708.91.00;5.102;Parte de radiador/reservatório de expansão
+35;Braçadeiras sem fim;3;9,90;29,70;7326.90.90;5.102;Abraçadeira de aço tipo rosca sem fim
+36;Remoção + instalação do motor;1;2300,00;2300,00;N/A - Serviço;N/A;Mão de obra, não é mercadoria - emitir em NFS-e (ISSQN), não em NF-e de produto
+37;Troca das homocinéticas;1;290,00;290,00;N/A - Serviço;N/A;Mão de obra, não é mercadoria - emitir em NFS-e (ISSQN), não em NF-e de produto
+;SUBTOTAL PEÇAS (itens 1 a 35);;;8995,40;;;
+;SUBTOTAL SERVIÇOS (itens 36 e 37, mais 7, 8 e 30 já contados acima em peças);;;2590,00;;;
+;TOTAL GERAL DA OS 1328;;;11585,40;;;

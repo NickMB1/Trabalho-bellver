@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Onboarding de Cliente</title>
+<style>
+  :root {
+    --paper: #f4f3fb;
+    --paper-alt: #eef0fc;
+    --card: #ffffff;
+    --ink: #1e1b3a;
+    --muted: #6b6f8a;
+    --line: #e2e1f5;
+    --accent: #6366f1;
+    --accent-strong: #4338ca;
+    --accent-soft: #eef0ff;
+    --amber: #f59e0b;
+    --amber-soft: #fef3e0;
+    --teal: #0d9488;
+    --teal-soft: #e6fbf7;
+    --danger: #e11d48;
+    --bg1: #eef2ff;
+    --bg2: #fdf2f8;
+    --shadow: 0 2px 8px rgba(76, 29, 149, 0.06), 0 12px 32px rgba(76, 29, 149, 0.10);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14121f;
+      --paper-alt: #1b1830;
+      --card: #201c36;
+      --ink: #ece9fb;
+      --muted: #a6a3c4;
+      --line: #35304f;
+      --accent: #a5b4fc;
+      --accent-strong: #c7d2fe;
+      --accent-soft: #2a2650;
+      --amber: #fbbf24;
+      --amber-soft: #3a2e12;
+      --teal: #5eead4;
+      --teal-soft: #123330;
+      --danger: #fb7185;
+      --bg1: #1a1530;
+      --bg2: #1f1224;
+      --shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.45);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #14121f;
+    --paper-alt: #1b1830;
+    --card: #201c36;
+    --ink: #ece9fb;
+    --muted: #a6a3c4;
+    --line: #35304f;
+    --accent: #a5b4fc;
+    --accent-strong: #c7d2fe;
+    --accent-soft: #2a2650;
+    --amber: #fbbf24;
+    --amber-soft: #3a2e12;
+    --teal: #5eead4;
+    --teal-soft: #123330;
+    --danger: #fb7185;
+    --bg1: #1a1530;
+    --bg2: #1f1224;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    background-image: radial-gradient(circle at 15% 0%, var(--bg1), transparent 55%),
+      radial-gradient(circle at 100% 20%, var(--bg2), transparent 50%);
+    background-attachment: fixed;
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 48px 20px 80px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .masthead {
+    margin-bottom: 24px;
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    font-weight: 700;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    flex-shrink: 0;
+  }
+
+  h1 {
+    font-family: ui-serif, Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    font-size: 2.1rem;
+    font-weight: 600;
+    margin: 8px 0 0;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+
+  .card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: "";
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--teal), var(--amber));
+  }
+
+  .client-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+  }
+
+  .client-strip .field {
+    background: var(--card);
+    padding: 16px 20px;
+  }
+
+  .field label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .field input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.95rem;
+    color: var(--ink);
+    padding: 0;
+  }
+
+  .field input:focus {
+    outline: none;
+  }
+
+  .field input::placeholder {
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 10px 16px;
+    background: var(--paper-alt);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+  }
+
+  .tab {
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: 8px 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .tab.active {
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+  }
+
+  .tab:hover:not(.active) {
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+  }
+
+  .panel[hidden] { display: none; }
+
+  .print-title { display: none; }
+
+  /* List screen */
+  .checklist-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    border-top: 1px solid var(--line);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .checklist-row:hover {
+    background: var(--accent-soft);
+  }
+
+  .checklist-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.8rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .checklist-main {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .checklist-client {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .checklist-meta {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .checklist-progress {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--teal);
+    background: var(--teal-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .status-error {
+    color: var(--danger);
+  }
+
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line);
+    background: var(--accent-soft);
+  }
+
+  .progress-track {
+    flex: 1;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--line);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    border-radius: 999px;
+    transition: width 0.25s ease;
+  }
+
+  .progress-label {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.85rem;
+    color: var(--muted);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .section-title {
+    margin: 18px 20px 4px;
+    padding: 5px 12px;
+    display: inline-block;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-strong);
+    background: var(--accent-soft);
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  .panel-hint {
+    padding: 16px 20px 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .item, .anexo-item {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    gap: 4px 12px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--line);
+    border-left: 3px solid transparent;
+    align-items: start;
+  }
+
+  .anexo-item.hue-1 { border-left-color: var(--accent); }
+  .anexo-item.hue-2 { border-left-color: var(--teal); }
+  .anexo-item.hue-3 { border-left-color: var(--amber); }
+  .anexo-item.hue-4 { border-left-color: #ec4899; }
+  .anexo-item.hue-5 { border-left-color: #06b6d4; }
+
+  .item:first-of-type { border-top: none; }
+
+  .panel > .item:first-child,
+  .panel > .anexo-item:first-child {
+    border-top: none;
+  }
+
+  .checkbox-wrap {
+    padding-top: 2px;
+  }
+
+  .card input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    background: var(--paper-alt);
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .card input[type="checkbox"]::after {
+    content: "";
+    width: 10px;
+    height: 6px;
+    border-left: 2px solid var(--card);
+    border-bottom: 2px solid var(--card);
+    transform: rotate(-45deg) translateY(-1px);
+    opacity: 0;
+  }
+
+  .card input[type="checkbox"]:checked {
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    border-color: var(--accent);
+  }
+
+  .card input[type="checkbox"]:checked::after {
+    opacity: 1;
+  }
+
+  .item-label, .anexo-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    transition: color 0.15s ease;
+  }
+
+  .item.done .item-label {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--line);
+  }
+
+  .item-note, .anexo-desc {
+    grid-column: 2;
+  }
+
+  .anexo-desc {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .item-note input, .item-note select {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--paper-alt);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+
+  .item-note input:focus, .item-note select:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    background: var(--card);
+  }
+
+  .item-note input::placeholder {
+    color: var(--muted);
+    opacity: 0.55;
+  }
+
+  .item-note input:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .panel-pad {
+    padding: 18px 20px;
+  }
+
+  .panel-pad > * {
+    margin-bottom: 14px;
+  }
+
+  .panel-pad > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .field-block label {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .field-block input {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: var(--paper-alt);
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+
+  .field-block input:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+    background: var(--card);
+  }
+
+  .field-block input::placeholder {
+    color: var(--muted);
+    opacity: 0.55;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 18px 20px;
+  }
+
+  button {
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 9px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    transition: border-color 0.15s ease, color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+  }
+
+  button.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+  }
+
+  button:hover {
+    border-color: var(--accent);
+    color: var(--accent-strong);
+  }
+
+  button.primary:hover {
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(99, 102, 241, 0.45);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+
+  @media print {
+    body { padding: 0; background: #fff; }
+    .actions, .tabs { display: none; }
+    .card { box-shadow: none; border-color: #ccc; }
+    .panel[hidden] { display: block !important; }
+    .panel + .panel { border-top: 1px solid #ccc; }
+    .print-title {
+      display: block;
+      padding: 16px 20px 0;
+      font-family: ui-serif, Georgia, serif;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .client-strip { grid-template-columns: 1fr; }
+    .field-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet" id="listScreen">
+  <div class="masthead">
+    <div class="eyebrow">Checklists da equipe</div>
+    <h1>Onboarding de Cliente</h1>
+  </div>
+
+  <div class="card">
+    <div class="client-strip" style="grid-template-columns: 1fr;">
+      <div class="field">
+        <label for="userName">Seu nome</label>
+        <input id="userName" type="text" placeholder="Como você quer aparecer nos checklists que criar/editar">
+      </div>
+    </div>
+
+    <div class="actions" style="justify-content: space-between; border-top: 1px solid var(--line);">
+      <button id="refreshBtn">Atualizar lista</button>
+      <button class="primary" id="newChecklistBtn">+ Novo checklist</button>
+    </div>
+
+    <div id="listStatus" class="panel-hint" style="padding-bottom: 16px;"></div>
+
+    <div id="checklistList"></div>
+  </div>
+</div>
+
+<div class="sheet" id="formScreen" hidden>
+  <div class="masthead">
+    <div class="eyebrow">Ficha de cadastro</div>
+    <h1>Onboarding de Cliente</h1>
+  </div>
+
+  <div class="card">
+    <div class="client-strip">
+      <div class="field">
+        <label for="nome">Razão Social</label>
+        <input id="nome" type="text" placeholder="Nome do cliente">
+      </div>
+      <div class="field">
+        <label for="cnpj">CNPJ</label>
+        <input id="cnpj" type="text" placeholder="00.000.000/0000-00">
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="checklist">Checklist</button>
+      <button class="tab" data-tab="abertura">Data de abertura</button>
+      <button class="tab" data-tab="competencia">A partir da competência</button>
+      <button class="tab" data-tab="socio">Sócio administrador</button>
+      <button class="tab" data-tab="funcionarios">Funcionários</button>
+      <button class="tab" data-tab="anexo" id="anexoTab" hidden>Anexo (Simples Nacional)</button>
+    </div>
+
+    <div class="panel" data-panel="checklist">
+      <div class="progress-row">
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-label" id="progressLabel">0 / 10</div>
+      </div>
+
+      <div class="section-title">Documentos e acessos</div>
+
+      <div class="item" data-item data-key="contrato">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Contrato</div>
+        <div class="item-note"><input type="text" placeholder="Data de assinatura"></div>
+      </div>
+
+      <div class="item" data-item data-key="certificado_digital">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Certificado digital</div>
+        <div class="item-note"><input type="text" placeholder="Tipo (e-CNPJ/e-CPF) e validade"></div>
+      </div>
+
+      <div class="item" data-item data-key="procuracao_ecac">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Procuração e-CAC</div>
+        <div class="item-note"><input type="text" placeholder="Data de outorga / validade"></div>
+      </div>
+
+      <div class="item" data-item data-key="procuracao_sefaz">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Procuração Sefaz</div>
+        <div class="item-note"><input type="text" placeholder="Data de outorga / validade"></div>
+      </div>
+
+      <div class="item" data-item data-key="cadastro_dominio">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Cadastro Domínio</div>
+        <div class="item-note"><input type="text" placeholder="Usuário / código do cadastro"></div>
+      </div>
+
+      <div class="item" data-item data-key="credenciamento_decweb">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Credenciamento DecWeb</div>
+        <div class="item-note"><input type="text" placeholder="Situação / protocolo"></div>
+      </div>
+
+      <div class="section-title">Dados cadastrais</div>
+
+      <div class="item" data-item data-key="cliente_desde">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Cliente desde</div>
+        <div class="item-note"><input type="text" placeholder="Mês / ano de entrada"></div>
+      </div>
+
+      <div class="item" data-item data-key="regime">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Regime</div>
+        <div class="item-note">
+          <select id="regimeSelect">
+            <option value="" selected disabled>Selecione</option>
+            <option>Simples Nacional</option>
+            <option>Lucro Presumido</option>
+            <option>Lucro Real</option>
+            <option>MEI</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="item" data-item data-key="inscricao_estadual">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Inscrição estadual</div>
+        <div class="item-note"><input type="text" placeholder="Número ou 'isento'"></div>
+      </div>
+
+      <div class="item" data-item data-key="inscricao_municipal">
+        <div class="checkbox-wrap"><input type="checkbox" data-check></div>
+        <div class="item-label">Inscrição municipal</div>
+        <div class="item-note"><input type="text" placeholder="Número ou 'isento'"></div>
+      </div>
+    </div>
+
+    <div class="panel" data-panel="abertura" hidden>
+      <div class="print-title">Data de abertura</div>
+      <div class="panel-pad">
+        <div class="field-block">
+          <label for="dataAbertura">Data de abertura da empresa</label>
+          <input id="dataAbertura" type="text" placeholder="DD/MM/AAAA">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" data-panel="competencia" hidden>
+      <div class="print-title">A partir da competência</div>
+      <div class="panel-pad">
+        <div class="field-block">
+          <label for="competenciaInicial">Atendimento a partir da competência</label>
+          <input id="competenciaInicial" type="text" placeholder="MM/AAAA">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" data-panel="socio" hidden>
+      <div class="print-title">Sócio administrador</div>
+      <div class="panel-pad">
+        <div class="field-block">
+          <label for="socioNome">Nome completo</label>
+          <input id="socioNome" type="text" placeholder="Nome do sócio administrador">
+        </div>
+        <div class="field-row">
+          <div class="field-block">
+            <label for="socioCpf">CPF</label>
+            <input id="socioCpf" type="text" placeholder="000.000.000-00">
+          </div>
+          <div class="field-block">
+            <label for="socioTel">Telefone</label>
+            <input id="socioTel" type="text" placeholder="(00) 00000-0000">
+          </div>
+        </div>
+        <div class="field-block">
+          <label for="socioEmail">E-mail</label>
+          <input id="socioEmail" type="email" placeholder="nome@empresa.com.br">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" data-panel="funcionarios" hidden>
+      <div class="print-title">Funcionários</div>
+      <div class="item">
+        <div class="checkbox-wrap"><input type="checkbox" id="hasEmployees"></div>
+        <div class="item-label">Possui funcionários</div>
+        <div class="item-note"><input type="number" id="employeeCount" min="0" placeholder="Quantidade de funcionários" disabled></div>
+      </div>
+    </div>
+
+    <div class="panel" data-panel="anexo" hidden>
+      <div class="print-title">Anexo (Simples Nacional)</div>
+      <div class="panel-hint">Selecione um ou mais anexos aplicáveis à atividade do cliente.</div>
+
+      <div class="anexo-item hue-1">
+        <div class="checkbox-wrap"><input type="checkbox" name="anexo" value="I"></div>
+        <div class="anexo-title">Anexo I</div>
+        <div class="anexo-desc">Comércio</div>
+      </div>
+
+      <div class="anexo-item hue-2">
+        <div class="checkbox-wrap"><input type="checkbox" name="anexo" value="II"></div>
+        <div class="anexo-title">Anexo II</div>
+        <div class="anexo-desc">Indústria</div>
+      </div>
+
+      <div class="anexo-item hue-3">
+        <div class="checkbox-wrap"><input type="checkbox" name="anexo" value="III"></div>
+        <div class="anexo-title">Anexo III</div>
+        <div class="anexo-desc">Serviços — regra geral</div>
+      </div>
+
+      <div class="anexo-item hue-4">
+        <div class="checkbox-wrap"><input type="checkbox" name="anexo" value="IV"></div>
+        <div class="anexo-title">Anexo IV</div>
+        <div class="anexo-desc">Construção civil, vigilância, limpeza, advocacia</div>
+      </div>
+
+      <div class="anexo-item hue-5">
+        <div class="checkbox-wrap"><input type="checkbox" name="anexo" value="V"></div>
+        <div class="anexo-title">Anexo V</div>
+        <div class="anexo-desc">Serviços intelectuais — sujeito ao Fator R</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="backBtn">Voltar à lista</button>
+      <button id="clearBtn">Limpar ficha</button>
+      <button id="printBtn">Imprimir / salvar PDF</button>
+      <button class="primary" id="saveBtn">Salvar</button>
+    </div>
+    <div id="saveStatus" class="panel-hint" style="padding-top: 0; padding-bottom: 16px;"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script>
+  const items = Array.from(document.querySelectorAll('[data-item]'));
+  const checks = Array.from(document.querySelectorAll('[data-check]'));
+  const fill = document.getElementById('progressFill');
+  const label = document.getElementById('progressLabel');
+
+  function updateProgress() {
+    const total = checks.length;
+    const done = checks.filter(c => c.checked).length;
+    fill.style.width = (done / total * 100) + '%';
+    label.textContent = done + ' / ' + total;
+  }
+
+  checks.forEach((c, i) => {
+    c.addEventListener('change', () => {
+      items[i].classList.toggle('done', c.checked);
+      updateProgress();
+    });
+  });
+
+  const tabButtons = Array.from(document.querySelectorAll('.tab'));
+  const panels = Array.from(document.querySelectorAll('.panel'));
+
+  function activateTab(tab) {
+    if (tab.hidden) return;
+    tabButtons.forEach(b => b.classList.remove('active'));
+    panels.forEach(p => p.hidden = true);
+    tab.classList.add('active');
+    document.querySelector('[data-panel="' + tab.dataset.tab + '"]').hidden = false;
+  }
+
+  tabButtons.forEach(btn => btn.addEventListener('click', () => activateTab(btn)));
+
+  const regimeSelect = document.getElementById('regimeSelect');
+  const anexoTab = document.getElementById('anexoTab');
+
+  function syncRegime() {
+    const isSimples = regimeSelect.value === 'Simples Nacional';
+    anexoTab.hidden = !isSimples;
+    if (!isSimples && anexoTab.classList.contains('active')) {
+      activateTab(tabButtons[0]);
+    }
+  }
+
+  regimeSelect.addEventListener('change', syncRegime);
+
+  const hasEmployees = document.getElementById('hasEmployees');
+  const employeeCount = document.getElementById('employeeCount');
+
+  function syncEmployees() {
+    employeeCount.disabled = !hasEmployees.checked;
+    if (!hasEmployees.checked) employeeCount.value = '';
+  }
+
+  hasEmployees.addEventListener('change', syncEmployees);
+
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+  function clearForm() {
+    document.querySelectorAll('#formScreen input[type="text"], #formScreen input[type="email"], #formScreen input[type="number"]').forEach(i => i.value = '');
+    document.querySelectorAll('#formScreen input[type="checkbox"]').forEach(c => c.checked = false);
+    regimeSelect.selectedIndex = 0;
+    items.forEach(el => el.classList.remove('done'));
+    syncRegime();
+    syncEmployees();
+    activateTab(tabButtons[0]);
+    updateProgress();
+  }
+
+  document.getElementById('clearBtn').addEventListener('click', clearForm);
+
+  syncRegime();
+  syncEmployees();
+  updateProgress();
+
+  // ---------------------------------------------------------------------
+  // Supabase — checklists compartilhados online
+  //
+  // As chaves vêm de config.js (copie config.example.js para config.js e
+  // preencha com os dados do seu projeto — Project Settings > API no
+  // painel do Supabase). Rode specs/onboarding-cliente-supabase/schema.sql
+  // uma vez no SQL Editor do projeto antes de usar.
+  // ---------------------------------------------------------------------
+  const SUPABASE_URL = window.SUPABASE_URL || '';
+  const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY || '';
+
+  const isConfigured = !!SUPABASE_URL && !!SUPABASE_ANON_KEY;
+  const sb = isConfigured ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
+  const listScreen = document.getElementById('listScreen');
+  const formScreen = document.getElementById('formScreen');
+  const listStatus = document.getElementById('listStatus');
+  const saveStatus = document.getElementById('saveStatus');
+  const checklistList = document.getElementById('checklistList');
+  const userNameInput = document.getElementById('userName');
+
+  userNameInput.value = localStorage.getItem('onboarding_user_name') || '';
+  userNameInput.addEventListener('change', () => {
+    localStorage.setItem('onboarding_user_name', userNameInput.value.trim());
+  });
+
+  let cachedRecords = [];
+  let currentRecord = null; // null = criando um checklist novo
+
+  function showList() {
+    formScreen.hidden = true;
+    listScreen.hidden = false;
+    fetchList();
+  }
+
+  function showForm() {
+    listScreen.hidden = true;
+    formScreen.hidden = false;
+    saveStatus.textContent = '';
+  }
+
+  function collectFormData() {
+    const itens = {};
+    items.forEach(el => {
+      const key = el.dataset.key;
+      const checkbox = el.querySelector('[data-check]');
+      const noteField = el.querySelector('.item-note input, .item-note select');
+      itens[key] = {
+        checked: !!(checkbox && checkbox.checked),
+        valor: noteField ? noteField.value : ''
+      };
+    });
+
+    const anexos = Array.from(document.querySelectorAll('input[name="anexo"]:checked')).map(c => c.value);
+
+    return {
+      nome_cliente: document.getElementById('nome').value.trim(),
+      cnpj: document.getElementById('cnpj').value.trim(),
+      itens,
+      data_abertura: document.getElementById('dataAbertura').value,
+      competencia_inicial: document.getElementById('competenciaInicial').value,
+      socio: {
+        nome: document.getElementById('socioNome').value,
+        cpf: document.getElementById('socioCpf').value,
+        telefone: document.getElementById('socioTel').value,
+        email: document.getElementById('socioEmail').value
+      },
+      funcionarios: {
+        possui: hasEmployees.checked,
+        quantidade: employeeCount.value
+      },
+      anexos
+    };
+  }
+
+  function applyFormData(record) {
+    clearForm();
+    document.getElementById('nome').value = record.nome_cliente || '';
+    document.getElementById('cnpj').value = record.cnpj || '';
+
+    const dados = record.dados || {};
+    const itens = dados.itens || {};
+    items.forEach((el, i) => {
+      const rec = itens[el.dataset.key];
+      if (!rec) return;
+      const checkbox = checks[i];
+      const noteField = el.querySelector('.item-note input, .item-note select');
+      checkbox.checked = !!rec.checked;
+      el.classList.toggle('done', checkbox.checked);
+      if (noteField) noteField.value = rec.valor || '';
+    });
+
+    document.getElementById('dataAbertura').value = dados.data_abertura || '';
+    document.getElementById('competenciaInicial').value = dados.competencia_inicial || '';
+
+    const socio = dados.socio || {};
+    document.getElementById('socioNome').value = socio.nome || '';
+    document.getElementById('socioCpf').value = socio.cpf || '';
+    document.getElementById('socioTel').value = socio.telefone || '';
+    document.getElementById('socioEmail').value = socio.email || '';
+
+    const func = dados.funcionarios || {};
+    hasEmployees.checked = !!func.possui;
+    employeeCount.value = func.quantidade || '';
+
+    (dados.anexos || []).forEach(v => {
+      const cb = document.querySelector('input[name="anexo"][value="' + v + '"]');
+      if (cb) cb.checked = true;
+    });
+
+    syncRegime();
+    syncEmployees();
+    updateProgress();
+  }
+
+  function progressOf(record) {
+    const itens = (record.dados && record.dados.itens) || {};
+    const total = items.length;
+    const done = Object.values(itens).filter(i => i.checked).length;
+    return done + ' / ' + total;
+  }
+
+  function formatDate(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+
+  const AVATAR_HUES = [
+    ['#6366f1', '#4338ca'], ['#0d9488', '#0f766e'], ['#f59e0b', '#d97706'],
+    ['#ec4899', '#db2777'], ['#06b6d4', '#0891b2'], ['#8b5cf6', '#7c3aed']
+  ];
+
+  function initialsOf(name) {
+    const parts = (name || '').trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '?';
+    return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+  }
+
+  function avatarGradientFor(name) {
+    let hash = 0;
+    for (let i = 0; i < (name || '').length; i++) hash = (hash * 31 + name.charCodeAt(i)) | 0;
+    const [c1, c2] = AVATAR_HUES[Math.abs(hash) % AVATAR_HUES.length];
+    return 'linear-gradient(135deg, ' + c1 + ', ' + c2 + ')';
+  }
+
+  function renderList(records) {
+    cachedRecords = records;
+    checklistList.innerHTML = '';
+
+    if (records.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'panel-hint';
+      empty.style.paddingBottom = '18px';
+      empty.textContent = 'Nenhum checklist salvo ainda. Clique em "+ Novo checklist" para criar o primeiro.';
+      checklistList.appendChild(empty);
+      return;
+    }
+
+    records.forEach(record => {
+      const row = document.createElement('div');
+      row.className = 'checklist-row';
+
+      const avatar = document.createElement('div');
+      avatar.className = 'checklist-avatar';
+      avatar.style.background = avatarGradientFor(record.criado_por || '');
+      avatar.textContent = initialsOf(record.criado_por);
+      row.appendChild(avatar);
+
+      const main = document.createElement('div');
+      main.className = 'checklist-main';
+
+      const client = document.createElement('div');
+      client.className = 'checklist-client';
+      client.textContent = record.nome_cliente || '(sem nome informado)';
+
+      const meta = document.createElement('div');
+      meta.className = 'checklist-meta';
+      const cnpjTxt = record.cnpj ? record.cnpj + ' · ' : '';
+      meta.textContent = cnpjTxt + 'criado por ' + (record.criado_por || '—') + ' · atualizado em ' + formatDate(record.updated_at);
+
+      main.appendChild(client);
+      main.appendChild(meta);
+
+      const progress = document.createElement('div');
+      progress.className = 'checklist-progress';
+      progress.textContent = progressOf(record);
+
+      row.appendChild(main);
+      row.appendChild(progress);
+
+      row.addEventListener('click', () => {
+        currentRecord = record;
+        applyFormData(record);
+        showForm();
+      });
+
+      checklistList.appendChild(row);
+    });
+  }
+
+  async function fetchList() {
+    if (!isConfigured) {
+      listStatus.innerHTML = '<span class="status-error">Supabase não configurado. Copie config.example.js para config.js e preencha SUPABASE_URL e SUPABASE_ANON_KEY (veja specs/onboarding-cliente-supabase/design.md).</span>';
+      checklistList.innerHTML = '';
+      return;
+    }
+    listStatus.textContent = 'Carregando checklists...';
+    const { data, error } = await sb
+      .from('checklists')
+      .select('*')
+      .order('updated_at', { ascending: false });
+
+    if (error) {
+      listStatus.innerHTML = '<span class="status-error">Erro ao carregar checklists: ' + error.message + '</span>';
+      return;
+    }
+
+    listStatus.textContent = '';
+    renderList(data || []);
+  }
+
+  async function saveChecklist() {
+    const userName = userNameInput.value.trim();
+    if (!userName) {
+      saveStatus.innerHTML = '<span class="status-error">Volte à lista e informe "Seu nome" antes de salvar.</span>';
+      return;
+    }
+    if (!isConfigured) {
+      saveStatus.innerHTML = '<span class="status-error">Supabase não configurado — não é possível salvar.</span>';
+      return;
+    }
+
+    const form = collectFormData();
+    const payload = {
+      nome_cliente: form.nome_cliente,
+      cnpj: form.cnpj,
+      atualizado_por: userName,
+      dados: {
+        itens: form.itens,
+        data_abertura: form.data_abertura,
+        competencia_inicial: form.competencia_inicial,
+        socio: form.socio,
+        funcionarios: form.funcionarios,
+        anexos: form.anexos
+      }
+    };
+
+    saveStatus.textContent = 'Salvando...';
+
+    let result;
+    if (currentRecord) {
+      result = await sb
+        .from('checklists')
+        .update(payload)
+        .eq('id', currentRecord.id)
+        .select()
+        .single();
+    } else {
+      payload.criado_por = userName;
+      result = await sb
+        .from('checklists')
+        .insert(payload)
+        .select()
+        .single();
+    }
+
+    if (result.error) {
+      saveStatus.innerHTML = '<span class="status-error">Erro ao salvar: ' + result.error.message + '</span>';
+      return;
+    }
+
+    currentRecord = result.data;
+    saveStatus.textContent = 'Salvo às ' + new Date().toLocaleTimeString('pt-BR');
+  }
+
+  document.getElementById('saveBtn').addEventListener('click', saveChecklist);
+
+  document.getElementById('newChecklistBtn').addEventListener('click', () => {
+    currentRecord = null;
+    clearForm();
+    showForm();
+  });
+
+  document.getElementById('backBtn').addEventListener('click', showList);
+  document.getElementById('refreshBtn').addEventListener('click', fetchList);
+
+  if (isConfigured) {
+    sb.channel('checklists-changes')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'checklists' }, () => {
+        if (!listScreen.hidden) fetchList();
+      })
+      .subscribe();
+  }
+
+  showList();
+</script>
+
+</body>
+</html>
