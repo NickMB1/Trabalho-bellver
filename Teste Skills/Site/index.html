@@ -458,7 +458,7 @@
     margin-bottom: 6px;
   }
 
-  .field-block input {
+  .field-block input, .field-block select {
     width: 100%;
     border: 1px solid var(--line);
     background: var(--paper-alt);
@@ -469,7 +469,7 @@
     color: var(--ink);
   }
 
-  .field-block input:focus {
+  .field-block input:focus, .field-block select:focus {
     outline: 2px solid var(--accent);
     outline-offset: 1px;
     background: var(--card);
@@ -596,7 +596,8 @@
     </div>
 
     <div class="tabs">
-      <button class="tab active" data-tab="checklist">Checklist</button>
+      <button class="tab active" data-tab="processo">Processo</button>
+      <button class="tab" data-tab="checklist">Checklist</button>
       <button class="tab" data-tab="abertura">Data de abertura</button>
       <button class="tab" data-tab="competencia">A partir da competência</button>
       <button class="tab" data-tab="socio">Sócio administrador</button>
@@ -604,7 +605,27 @@
       <button class="tab" data-tab="anexo" id="anexoTab" hidden>Anexo (Simples Nacional)</button>
     </div>
 
-    <div class="panel" data-panel="checklist">
+    <div class="panel" data-panel="processo">
+      <div class="print-title">Processo</div>
+      <div class="panel-pad">
+        <div class="field-block">
+          <label for="tipoProcesso">Tipo de processo</label>
+          <select id="tipoProcesso">
+            <option value="" selected disabled>Selecione</option>
+            <option>Novo cliente</option>
+            <option>Abertura</option>
+            <option>Alteração</option>
+            <option>Transformação</option>
+          </select>
+        </div>
+        <div class="field-block">
+          <label for="situacaoProcesso">Situação do processo</label>
+          <input id="situacaoProcesso" type="text" placeholder="Situação atual do processo">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" data-panel="checklist" hidden>
       <div class="progress-row">
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
         <div class="progress-label" id="progressLabel">0 / 10</div>
@@ -689,6 +710,10 @@
         <div class="field-block">
           <label for="dataAbertura">Data de abertura da empresa</label>
           <input id="dataAbertura" type="text" placeholder="DD/MM/AAAA">
+        </div>
+        <div class="field-block">
+          <label for="dataLiberacaoJunta">Data de liberação na Junta Comercial</label>
+          <input id="dataLiberacaoJunta" type="text" placeholder="DD/MM/AAAA">
         </div>
       </div>
     </div>
@@ -818,6 +843,7 @@
 
   const regimeSelect = document.getElementById('regimeSelect');
   const anexoTab = document.getElementById('anexoTab');
+  const tipoProcessoSelect = document.getElementById('tipoProcesso');
 
   function syncRegime() {
     const isSimples = regimeSelect.value === 'Simples Nacional';
@@ -845,6 +871,7 @@
     document.querySelectorAll('#formScreen input[type="text"], #formScreen input[type="email"], #formScreen input[type="number"]').forEach(i => i.value = '');
     document.querySelectorAll('#formScreen input[type="checkbox"]').forEach(c => c.checked = false);
     regimeSelect.selectedIndex = 0;
+    tipoProcessoSelect.selectedIndex = 0;
     items.forEach(el => el.classList.remove('done'));
     syncRegime();
     syncEmployees();
@@ -916,8 +943,11 @@
     return {
       nome_cliente: document.getElementById('nome').value.trim(),
       cnpj: document.getElementById('cnpj').value.trim(),
+      tipo_processo: tipoProcessoSelect.value,
+      situacao_processo: document.getElementById('situacaoProcesso').value,
       itens,
       data_abertura: document.getElementById('dataAbertura').value,
+      data_liberacao_junta_comercial: document.getElementById('dataLiberacaoJunta').value,
       competencia_inicial: document.getElementById('competenciaInicial').value,
       socio: {
         nome: document.getElementById('socioNome').value,
@@ -939,6 +969,9 @@
     document.getElementById('cnpj').value = record.cnpj || '';
 
     const dados = record.dados || {};
+    tipoProcessoSelect.value = dados.tipo_processo || '';
+    document.getElementById('situacaoProcesso').value = dados.situacao_processo || '';
+
     const itens = dados.itens || {};
     items.forEach((el, i) => {
       const rec = itens[el.dataset.key];
@@ -951,6 +984,7 @@
     });
 
     document.getElementById('dataAbertura').value = dados.data_abertura || '';
+    document.getElementById('dataLiberacaoJunta').value = dados.data_liberacao_junta_comercial || '';
     document.getElementById('competenciaInicial').value = dados.competencia_inicial || '';
 
     const socio = dados.socio || {};
@@ -1097,8 +1131,11 @@
       cnpj: form.cnpj,
       atualizado_por: userName,
       dados: {
+        tipo_processo: form.tipo_processo,
+        situacao_processo: form.situacao_processo,
         itens: form.itens,
         data_abertura: form.data_abertura,
+        data_liberacao_junta_comercial: form.data_liberacao_junta_comercial,
         competencia_inicial: form.competencia_inicial,
         socio: form.socio,
         funcionarios: form.funcionarios,
