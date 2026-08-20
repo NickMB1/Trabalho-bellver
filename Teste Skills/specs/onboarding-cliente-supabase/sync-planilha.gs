@@ -27,6 +27,7 @@ var COLUMNS = [
   'id', 'nome_cliente', 'cnpj', 'tipo_processo', 'situacao_processo',
   'criado_por', 'atualizado_por',
   'data_abertura', 'data_liberacao_junta_comercial', 'competencia_inicial',
+  'cliente_desde', 'regime',
   'socio_nome', 'socio_cpf', 'socio_telefone', 'socio_email',
   'funcionarios_possui', 'funcionarios_qtd', 'anexos',
   'created_at', 'updated_at'
@@ -89,6 +90,16 @@ function getSheet_(sheetName) {
     sheet.appendRow(COLUMNS);
     sheet.setFrozenRows(1);
     sheet.hideColumns(1);
+  } else {
+    // Corrige o cabeçalho se COLUMNS mudou (coluna nova ou reordenada) desde
+    // a última sincronização — as linhas já sincronizadas se realinham
+    // sozinhas na sincronização seguinte, que reescreve a linha inteira de
+    // cada checklist (ver syncFromSupabase).
+    var currentHeader = sheet.getRange(1, 1, 1, Math.max(sheet.getLastColumn(), COLUMNS.length)).getValues()[0];
+    var headerMatches = COLUMNS.every(function (col, i) { return currentHeader[i] === col; });
+    if (!headerMatches) {
+      sheet.getRange(1, 1, 1, COLUMNS.length).setValues([COLUMNS]);
+    }
   }
   return sheet;
 }
@@ -107,6 +118,9 @@ function buildRow_(record) {
   var dados = record.dados || {};
   var socio = dados.socio || {};
   var func = dados.funcionarios || {};
+  var itens = dados.itens || {};
+  var clienteDesde = itens.cliente_desde || {};
+  var regime = itens.regime || {};
 
   return [
     record.id || '',
@@ -119,6 +133,8 @@ function buildRow_(record) {
     dados.data_abertura || '',
     dados.data_liberacao_junta_comercial || '',
     dados.competencia_inicial || '',
+    clienteDesde.valor || '',
+    regime.valor || '',
     socio.nome || '',
     socio.cpf || '',
     socio.telefone || '',

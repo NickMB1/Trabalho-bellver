@@ -76,9 +76,19 @@ criar o novo, então não duplica).
 ## Colunas da planilha
 
 `nome_cliente, cnpj, tipo_processo, situacao_processo, criado_por, atualizado_por,
-data_abertura, data_liberacao_junta_comercial, competencia_inicial, socio_nome,
-socio_cpf, socio_telefone, socio_email, funcionarios_possui, funcionarios_qtd,
-anexos, created_at, updated_at`
+data_abertura, data_liberacao_junta_comercial, competencia_inicial, cliente_desde,
+regime, socio_nome, socio_cpf, socio_telefone, socio_email, funcionarios_possui,
+funcionarios_qtd, anexos, created_at, updated_at`
+
+`cliente_desde` e `regime` vêm dos itens correspondentes do checklist (aba
+"Checklist" do formulário) — só aparecem preenchidos se a pessoa marcou/preencheu
+esses itens ao editar o registro. Ficam antes das colunas de sócio.
+
+> Se `COLUMNS` mudar de ordem ou ganhar colunas novas, o script corrige
+> automaticamente o cabeçalho de abas já sincronizadas na próxima rodada — e
+> como cada sincronização reescreve a linha inteira de cada checklist (por
+> `id`), os dados existentes se realinham sozinhos também, sem precisar mexer
+> na planilha manualmente.
 
 Existe também uma coluna `id` na coluna A, mas ela fica **oculta** — não é pensada
 para leitura pelas pessoas que usam a planilha, só existe para a sincronização saber
